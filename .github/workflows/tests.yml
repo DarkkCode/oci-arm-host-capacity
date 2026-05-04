@@ -19,6 +19,9 @@ jobs:
       - name: Install Dependencies
         run: composer install --no-dev --optimize-autoloader
         
+      - name: Create Private Key File
+        run: echo "${{ secrets.OCI_KEY_FILE }}" > private_key.pem
+        
       - name: Run Oracle Bot
         run: php index.php
         env:
@@ -26,7 +29,7 @@ jobs:
           OCI_USER_ID: ${{ secrets.OCI_USER_ID }}
           OCI_TENANCY_ID: ${{ secrets.OCI_TENANCY_ID }}
           OCI_KEY_FINGERPRINT: ${{ secrets.OCI_FINGERPRINT }}
-          OCI_KEY_CONTENTS: ${{ secrets.OCI_KEY_FILE }}
+          OCI_PRIVATE_KEY_FILENAME: private_key.pem
           OCI_SUBNET_ID: ${{ secrets.OCI_SUBNET_ID }}
           OCI_IMAGE_ID: ${{ secrets.OCI_IMAGE_ID }}
           OCI_SSH_PUBLIC_KEY: ${{ secrets.OCI_SSH_PUBLIC_KEY }}
